@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import ForgotPassword from "./components/ForgotPassword";
 import UpdateProfile from "./components/UpdateProfile";
+import AuthProvider from "./context/AuthContext";
 
 function App() {
   return (
@@ -13,15 +14,19 @@ function App() {
       className="d-flex h-100 flex-column align-items-center justify-content-center"
       style={{ minHeight: "100vh" }}
     >
-      <BrowserRouter>
-        <Routes>
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/update-profile" element={<UpdateProfile />} />
-          <Route path="/" element={<Dashboard />} />
-        </Routes>
-      </BrowserRouter>
+      <div className="w-100" style={{ maxWidth: "400px" }}>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/update-profile" element={<UpdateProfile />} />
+              <Route path="/" element={<Dashboard />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </div>
     </Container>
   );
 }
