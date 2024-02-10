@@ -89,10 +89,9 @@ const SignUp = () => {
               variant="primary"
               type="submit"
               disabled={loading}
-              style={{}}
             >
               {loading ? (
-                <Spinner animation="border" role="status">
+                <Spinner animation="border" size="sm" as={"span"} role="status">
                   <span className="visually-hidden">Loading...</span>
                 </Spinner>
               ) : (

@@ -46,7 +46,7 @@ const Dashboard = () => {
           onClick={handleLogout}
         >
           {loading ? (
-            <Spinner animation="border" role="status">
+            <Spinner animation="border" size="sm" as={"span"} role="status">
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           ) : (

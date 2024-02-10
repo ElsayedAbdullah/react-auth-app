@@ -3,6 +3,7 @@ import {
   UserCredential,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -20,6 +21,7 @@ interface IAuthContext {
     password: string
   ) => Promise<UserCredential> | undefined;
   logout: () => Promise<void> | undefined;
+  resetPassword: (email: string) => Promise<void> | undefined;
   setCurrentUser: (user: User) => void;
 }
 
@@ -39,9 +41,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  // login function
+  // logout function
   const logout = () => {
     return signOut(auth);
+  };
+
+  // reset password
+  const resetPassword = (email: string) => {
+    return sendPasswordResetEmail(auth, email);
   };
 
   // to track user when changed
@@ -59,7 +66,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ currentUser, signup, login, logout, setCurrentUser }}
+      value={{
+        currentUser,
+        signup,
+        login,
+        logout,
+        resetPassword,
+        setCurrentUser,
+      }}
     >
       {!loading && children}
     </AuthContext.Provider>
