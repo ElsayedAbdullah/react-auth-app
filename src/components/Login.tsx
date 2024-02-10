@@ -1,6 +1,6 @@
 import { FormEvent, useRef, useState } from "react";
 import { Alert, Button, Card, Form, Spinner } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks";
 import { FirebaseError } from "firebase/app";
 
@@ -16,6 +16,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
 
   // Refs
   const emailRef = useRef<HTMLInputElement>(null);
@@ -32,7 +34,7 @@ const Login = () => {
       setLoading(true);
       await login(emailRef.current!.value, passwordRef.current!.value);
 
-      navigate("/");
+      navigate(location.state?.path || "/", { replace: true });
     } catch (err) {
       console.log(err);
 
@@ -76,7 +78,7 @@ const Login = () => {
               disabled={loading}
             >
               {loading ? (
-                <Spinner animation="border" role="status">
+                <Spinner animation="border" size="sm" as={"span"} role="status">
                   <span className="visually-hidden">Loading...</span>
                 </Spinner>
               ) : (

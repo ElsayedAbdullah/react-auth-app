@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard";
 import ForgotPassword from "./components/ForgotPassword";
 import UpdateProfile from "./components/UpdateProfile";
 import AuthProvider from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -22,7 +23,14 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/update-profile" element={<UpdateProfile />} />
-              <Route path="/" element={<Dashboard />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute redirectPath="/login">
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

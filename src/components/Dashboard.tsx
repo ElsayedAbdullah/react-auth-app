@@ -17,7 +17,6 @@ const Dashboard = () => {
       setError("");
       setLoading(true);
       await logout();
-
       navigate("/login");
     } catch (err) {
       setError("Failed to logout");
