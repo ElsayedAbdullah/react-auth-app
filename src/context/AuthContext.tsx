@@ -6,12 +6,15 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateEmail,
+  updatePassword,
 } from "firebase/auth";
 import { ReactNode, createContext, useEffect, useState } from "react";
 import auth from "../firebase";
 
 interface IAuthContext {
   currentUser: User | null;
+  setCurrentUser: (user: User) => void;
   signup: (
     email: string,
     password: string
@@ -22,7 +25,8 @@ interface IAuthContext {
   ) => Promise<UserCredential> | undefined;
   logout: () => Promise<void> | undefined;
   resetPassword: (email: string) => Promise<void> | undefined;
-  setCurrentUser: (user: User) => void;
+  updateUserEmail: (email: string) => Promise<void> | undefined;
+  updateUserPassword: (email: string) => Promise<void> | undefined;
 }
 
 export const AuthContext = createContext({} as IAuthContext);
@@ -51,10 +55,19 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
+  // update email
+  const updateUserEmail = (email: string) => {
+    return updateEmail(auth.currentUser!, email);
+  };
+
+  // update password
+  const updateUserPassword = (password: string) => {
+    return updatePassword(auth.currentUser!, password);
+  };
+
   // to track user when changed
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
-      console.log(user);
       setCurrentUser(user);
       setLoading(false);
     });
@@ -72,6 +85,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         login,
         logout,
         resetPassword,
+        updateUserEmail,
+        updateUserPassword,
         setCurrentUser,
       }}
     >
