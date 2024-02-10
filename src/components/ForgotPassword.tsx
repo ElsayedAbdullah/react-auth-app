@@ -21,9 +21,10 @@ const ForgotPassword = () => {
 
     try {
       setError("");
+      setMessage("");
       setLoading(true);
       await resetPassword(emailRef.current!.value);
-      setMessage("check your inbox");
+      setMessage("check your inbox for further instructions");
     } catch (err) {
       setError("Can't reset your password");
     }
@@ -41,6 +42,7 @@ const ForgotPassword = () => {
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
+                required
                 placeholder="Enter email"
                 ref={emailRef}
                 defaultValue={currentUser?.email ?? ""}

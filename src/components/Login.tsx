@@ -57,6 +57,7 @@ const Login = () => {
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
+                required
                 placeholder="Enter email"
                 ref={emailRef}
               />
@@ -66,6 +67,7 @@ const Login = () => {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
+                required
                 placeholder="Password"
                 ref={passwordRef}
               />
